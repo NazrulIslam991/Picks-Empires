@@ -4,8 +4,13 @@ class AppRoute {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case RouteName.splashScreen:
-      //return MaterialPageRoute(builder: (_) => SplashScreen());
-
+        return MaterialPageRoute(
+          builder: (_) => const SplashScreen(),
+        ); // splash screen
+      case RouteName.onBordingScreen:
+        return MaterialPageRoute(
+          builder: (_) => const OnbordingScreen(),
+        ); // OnBording Screen
       default:
         return MaterialPageRoute(
           builder: (_) =>
