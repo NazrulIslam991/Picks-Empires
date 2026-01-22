@@ -2,7 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:picks_empire/core/constrants/app_images.dart';
-import 'package:picks_empire/core/routes/route_name.dart';
+
+import '../../../core/routes/route_name.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
