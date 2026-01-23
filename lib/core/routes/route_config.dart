@@ -11,6 +11,10 @@ class AppRoute {
         return MaterialPageRoute(
           builder: (_) => const OnbordingScreen(),
         ); // OnBording Screen
+      case RouteName.logInScreen:
+        return MaterialPageRoute(
+          builder: (_) => const LoginScreen(),
+        ); // login Screen
       default:
         return MaterialPageRoute(
           builder: (_) =>

@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:picks_empire/core/constrants/app_images.dart';
-import 'package:picks_empire/model/onbording_model/onbording_model.dart';
+
+import '../../../../data/model/onbording_model/onbording_model.dart';
 
 // for list
 final onboardingListProvider = Provider<List<OnbordingModel>>((ref) {
@@ -34,4 +36,6 @@ final onboardingListProvider = Provider<List<OnbordingModel>>((ref) {
 });
 
 // for index
-final onBordingIndexProvider = StateProvider(<int>(ref) => 0);
+final onBordingIndexProvider = StateProvider<int>((ref) => 0);
+// pageController
+final pageControllerProvider = Provider.autoDispose((ref) => PageController());

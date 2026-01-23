@@ -3,7 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:picks_empire/core/constrants/app_colors.dart';
 import 'package:picks_empire/core/resources/style_manager.dart';
-import 'package:picks_empire/presentation/view_model/onbording_view_model/onbording_view_model.dart';
+import 'package:picks_empire/core/routes/route_name.dart';
+import 'package:picks_empire/presentation/screens/onbording/view_model/onbording_view_model.dart';
 
 class OnbordingScreen extends ConsumerWidget {
   const OnbordingScreen({super.key});
@@ -13,7 +14,7 @@ class OnbordingScreen extends ConsumerWidget {
     final onBordingList = ref.watch(onboardingListProvider);
     final onBordingIndex = ref.watch(onBordingIndexProvider);
     final onBordingIndexRead = ref.read(onBordingIndexProvider.notifier);
-    final pageController = PageController();
+    final pageController = ref.watch(pageControllerProvider);
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -34,15 +35,18 @@ class OnbordingScreen extends ConsumerWidget {
               onBordingIndexRead.state = index;
             },
             itemBuilder: (context, index) {
-              return Image.asset(
-                onBordingList[index].img,
-                fit: BoxFit.cover,
-                width: double.infinity,
-                height: double.infinity,
+              return AnimatedOpacity(
+                duration: const Duration(milliseconds: 100),
+                opacity: onBordingIndex == index ? 1.0 : 0.0,
+                child: Image.asset(
+                  onBordingList[index].img,
+                  fit: BoxFit.cover,
+                  width: double.infinity,
+                  height: double.infinity,
+                ),
               );
             },
-          ),
-          // page indicator
+          ), // page indicator
           Positioned(
             bottom: 50,
             left: 20,
@@ -57,7 +61,7 @@ class OnbordingScreen extends ConsumerWidget {
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                     color: Colors.white,
-                    fontSize: 22,
+                    fontSize: 24,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -73,7 +77,7 @@ class OnbordingScreen extends ConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: List.generate(onBordingList.length, (index) {
                     return AnimatedContainer(
-                      duration: Duration(milliseconds: 300),
+                      duration: Duration(milliseconds: 200),
                       margin: const EdgeInsets.symmetric(horizontal: 4),
                       height: 6,
                       width: onBordingIndex == index ? 20 : 6,
@@ -99,9 +103,11 @@ class OnbordingScreen extends ConsumerWidget {
                     onPressed: () {
                       if (onBordingIndex < onBordingList.length - 1) {
                         pageController.nextPage(
-                          duration: const Duration(milliseconds: 200),
+                          duration: const Duration(milliseconds: 600),
                           curve: Curves.easeInOut,
                         );
+                      } else {
+                        Navigator.pushNamed(context, RouteName.logInScreen);
                       }
                     },
                     child: const Text(
