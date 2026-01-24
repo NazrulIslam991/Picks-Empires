@@ -6,9 +6,19 @@ class RouteName {
   static const String otpScreen = "/otpScreen"; // OTP Screen
   static const String categoryScreen = "/categoryScreen"; // OTP Screen
   static const String forgotPassword_EmailScreen =
-      "/forgotPassword_EmailScreen"; // forgotPassword_EmailScreen Screen
+      "/forgotPassword_EmailScreen"; // forgotPassword_EmailScreen
   static const String forgotPassword_OTPScreen =
-      "/forgotPassword_OTPScreen"; // forgotPassword_OTPScreen Screen
+      "/forgotPassword_OTPScreen"; // forgotPassword_OTPScreen
   static const String resetPasswordScreen =
-      "/resetPasswordScreen"; // resetPasswordScreen Screen
+      "/resetPasswordScreen"; // resetPasswordScreen
+  static const String navBarScreen = "/navBarScreen"; // navBarScreen
+  static const String subscriptionScreen =
+      "/subscriptionScreen"; // subscriptionScreen
+  static const String subsConfirmationScreen =
+      "/subsConfirmationScreen"; // subsConfirmationScreen
+  static const String addNewCardScreen =
+      "/addNewCardScreen"; // addNewCardScreen
+  static const String subSuccessScreen =
+      "/subSuccessScreen"; // subSuccessScreen
+  static const String homeScreen = "/homeScreen"; // homeScreen
 }

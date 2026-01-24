@@ -131,13 +131,17 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       onPressed: loginState.isLoading
                           ? null
                           : () {
-                              ref
-                                  .read(loginProvider.notifier)
-                                  .login(
-                                    emailController.text,
-                                    passwordController.text,
-                                    () {},
+                              ref.read(loginProvider.notifier).login(
+                                emailController.text,
+                                passwordController.text,
+                                () {
+                                  Navigator.pushNamedAndRemoveUntil(
+                                    context,
+                                    RouteName.navBarScreen,
+                                    (predicate) => false,
                                   );
+                                },
+                              );
                             },
                       style: getElevatedButtonStyle(color: AppColors.BtnColor),
                       child: loginState.isLoading
