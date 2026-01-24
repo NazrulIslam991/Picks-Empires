@@ -4,8 +4,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:picks_empire/core/constrants/app_colors.dart';
 import 'package:picks_empire/core/constrants/app_images.dart';
 import 'package:picks_empire/core/resources/style_manager.dart';
+import 'package:picks_empire/core/routes/route_name.dart';
 import 'package:picks_empire/presentation/screens/auth/login/view_model/login_view_model.dart';
 import 'package:picks_empire/presentation/screens/widgets/custom_text_input_field.dart';
+
+import '../../../widgets/background_widget.dart';
+import '../view_model/toggle_password_view_model.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
@@ -19,171 +23,181 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   final passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(loginProvider);
-    final read = ref.read(loginProvider.notifier);
+    final loginState = ref.watch(loginProvider);
+    final isPasswordVisible = ref.watch(passwordVisibilityProvider);
+    final isRememberMe = ref.watch(rememberMeProvider);
     return Scaffold(
       extendBodyBehindAppBar: true,
       //appBar: AppBar(backgroundColor: Colors.transparent),
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(AppImages.background),
-            fit: BoxFit.cover,
-          ),
-        ),
+      body: BackgroundWidget(
         child: SafeArea(
           child: Padding(
             padding: EdgeInsets.only(top: 30, left: 12, right: 12, bottom: 12),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Welcome Back!",
-                  style: getSemiBoldStyle(color: Colors.white, fontSize: 22),
-                ),
-                SizedBox(height: 8),
-                Text(
-                  "Please fill Up and Login to your account",
-                  style: getRegularStyle(color: Colors.grey, fontSize: 14),
-                ),
-                SizedBox(height: 50),
-
-                Text(
-                  "Email Address",
-                  style: getRegularStyle(color: Colors.white54, fontSize: 14),
-                ),
-                SizedBox(height: 10),
-                // email field
-                CustomTextField(
-                  controller: emailController,
-                  hintText: "Enter your email address",
-                  errorText: state.emailError,
-                  keyboardType: TextInputType.emailAddress,
-                  textInputAction: TextInputAction.next,
-                ),
-                SizedBox(height: 10),
-
-                Text(
-                  "Password",
-                  style: getRegularStyle(color: Colors.white54, fontSize: 14),
-                ),
-                SizedBox(height: 10),
-                // email field
-                CustomTextField(
-                  controller: passwordController,
-                  hintText: "Enter your password",
-                  errorText: state.passwordError,
-                  obscureText: !state.isPasswordVisible,
-                  keyboardType: TextInputType.text,
-                  textInputAction: TextInputAction.done,
-                  suffixIcon: IconButton(
-                    onPressed: () {
-                      read.togglePassword();
-                    },
-                    icon: Icon(
-                      state.isPasswordVisible
-                          ? Icons.visibility
-                          : Icons.visibility_off,
-                      color: Colors.white,
-                    ),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Welcome Back!",
+                    style: getSemiBoldStyle(color: Colors.white, fontSize: 22),
                   ),
-                ),
-                // Remember me and forgot password
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Checkbox(
-                      value: state.rememberMe,
-                      onChanged: (value) {
-                        read.toggleRememblerMe(value);
-                      },
-                      shape: CircleBorder(),
-                      side: const BorderSide(color: Colors.grey, width: 1.5),
-                      checkColor: Colors.black87,
-                      activeColor: Colors.white,
-                    ),
-                    SizedBox(width: 2),
-                    Text(
-                      "Remember Me",
-                      style: getRegularStyle(color: Colors.grey),
-                    ),
-                    Spacer(),
-                    // Forgot Password
-                    TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        "Forgot Password",
-                        style: getSemiBoldStyle(color: Colors.red),
+                  SizedBox(height: 8),
+                  Text(
+                    "Please fill Up and Login to your account",
+                    style: getRegularStyle(color: Colors.grey, fontSize: 14),
+                  ),
+                  SizedBox(height: 50),
+
+                  Text(
+                    "Email Address",
+                    style: getRegularStyle(color: Colors.white54, fontSize: 14),
+                  ),
+                  SizedBox(height: 10),
+                  // email field
+                  CustomTextField(
+                    controller: emailController,
+                    hintText: "Enter your email address",
+                    errorText: loginState.emailError,
+                    keyboardType: TextInputType.emailAddress,
+                    textInputAction: TextInputAction.next,
+                  ),
+                  SizedBox(height: 10),
+
+                  Text(
+                    "Password",
+                    style: getRegularStyle(color: Colors.white54, fontSize: 14),
+                  ),
+                  SizedBox(height: 10),
+                  // email field
+                  CustomTextField(
+                    controller: passwordController,
+                    hintText: "Enter your password",
+                    errorText: loginState.passwordError,
+                    obscureText: !isPasswordVisible,
+                    keyboardType: TextInputType.text,
+                    textInputAction: TextInputAction.done,
+                    suffixIcon: IconButton(
+                      onPressed: () => ref
+                          .read(passwordVisibilityProvider.notifier)
+                          .toggle(),
+                      icon: Icon(
+                        isPasswordVisible
+                            ? Icons.visibility
+                            : Icons.visibility_off,
                       ),
                     ),
-                  ],
-                ),
-                SizedBox(height: 15),
-                // login btn
-                SizedBox(
-                  width: double.infinity,
-                  height: 50,
-                  child: ElevatedButton(
-                    onPressed: state.isLoading
-                        ? null
-                        : () {
-                            read.login(
-                              emailController.text,
-                              passwordController.text,
-                              () {},
-                            );
-                          },
-                    style: getElevatedButtonStyle(color: AppColors.BtnColor),
-                    child: state.isLoading
-                        ? const CircularProgressIndicator(color: Colors.white)
-                        : Text(
-                            "Login",
-                            style: getSemiBoldStyle(color: Colors.black),
-                          ),
                   ),
-                ),
-                SizedBox(height: 25),
-
-                // ------- Or Sign In with----------
-                Padding(
-                  padding: const EdgeInsets.only(left: 50, right: 50),
-                  child: OrDivider(),
-                ),
-                SizedBox(height: 25),
-                // signin with google button
-                customBtn(
-                  imagePath: AppImages.google,
-                  title: "Continue with google",
-                  onTap: () {},
-                ),
-                SizedBox(height: 15),
-                // continue with apple button
-                customBtn(
-                  imagePath: AppImages.apple,
-                  title: "Continue with Apple",
-                  onTap: () {},
-                ),
-                SizedBox(height: 30),
-
-                // dont have an account?? create account
-                Center(
-                  child: RichText(
-                    text: TextSpan(
-                      text: "Don’t have an account? ",
-                      style: getRegularStyle(color: Colors.grey, fontSize: 13),
-                      children: [
-                        TextSpan(
-                          text: "Create",
-                          style: getSemiBoldStyle(color: AppColors.BtnColor),
-                          recognizer: TapGestureRecognizer()..onTap = () {},
+                  // Remember me and forgot password
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Checkbox(
+                        value: isRememberMe,
+                        onChanged: (val) => ref
+                            .read(rememberMeProvider.notifier)
+                            .set(val ?? false),
+                        shape: CircleBorder(),
+                        side: const BorderSide(color: Colors.grey, width: 1.5),
+                        checkColor: Colors.black87,
+                        activeColor: Colors.white,
+                      ),
+                      SizedBox(width: 2),
+                      Text(
+                        "Remember Me",
+                        style: getRegularStyle(color: Colors.grey),
+                      ),
+                      Spacer(),
+                      // Forgot Password
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pushNamed(
+                            context,
+                            RouteName.forgotPassword_EmailScreen,
+                          );
+                        },
+                        child: Text(
+                          "Forgot Password",
+                          style: getSemiBoldStyle(color: Colors.red),
                         ),
-                      ],
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 15),
+                  // login btn
+                  SizedBox(
+                    width: double.infinity,
+                    height: 50,
+                    child: ElevatedButton(
+                      onPressed: loginState.isLoading
+                          ? null
+                          : () {
+                              ref
+                                  .read(loginProvider.notifier)
+                                  .login(
+                                    emailController.text,
+                                    passwordController.text,
+                                    () {},
+                                  );
+                            },
+                      style: getElevatedButtonStyle(color: AppColors.BtnColor),
+                      child: loginState.isLoading
+                          ? const CircularProgressIndicator(color: Colors.white)
+                          : Text(
+                              "Login",
+                              style: getSemiBoldStyle(color: Colors.black),
+                            ),
                     ),
                   ),
-                ),
-              ],
+                  SizedBox(height: 25),
+
+                  // ------- Or Sign In with----------
+                  Padding(
+                    padding: const EdgeInsets.only(left: 50, right: 50),
+                    child: OrDivider(),
+                  ),
+                  SizedBox(height: 25),
+                  // signin with google button
+                  customBtn(
+                    imagePath: AppImages.google,
+                    title: "Continue with google",
+                    onTap: () {},
+                  ),
+                  SizedBox(height: 15),
+                  // continue with apple button
+                  customBtn(
+                    imagePath: AppImages.apple,
+                    title: "Continue with Apple",
+                    onTap: () {},
+                  ),
+                  SizedBox(height: 30),
+
+                  // dont have an account?? create account
+                  Center(
+                    child: RichText(
+                      text: TextSpan(
+                        text: "Don’t have an account? ",
+                        style: getRegularStyle(
+                          color: Colors.grey,
+                          fontSize: 13,
+                        ),
+                        children: [
+                          TextSpan(
+                            text: "Create",
+                            style: getSemiBoldStyle(color: AppColors.BtnColor),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                Navigator.pushNamed(
+                                  context,
+                                  RouteName.signUpScreen,
+                                );
+                              },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

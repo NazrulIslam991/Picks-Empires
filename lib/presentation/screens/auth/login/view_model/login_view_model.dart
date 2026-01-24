@@ -1,57 +1,27 @@
-import 'dart:ui';
-
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/legacy.dart';
+import 'package:picks_empire/data/model/auth_model/login_model.dart';
 
-import '../../../../../data/model/auth_model/login_model.dart';
+import '../../../../../core/constrants/validator.dart';
 
-class LoginViewModel extends StateNotifier<LoginModel> {
-  LoginViewModel() : super(LoginModel());
-
-  void togglePassword() {
-    state = state.copyWith(isPasswordVisible: !state.isPasswordVisible);
-  }
-
-  void toggleRememblerMe(bool? value) {
-    state = state.copyWith(rememberMe: value ?? false);
-  }
-
-  // 1. Validation Logic
-  Map<String, String?> _getValidationErrors(String email, String password) {
-    String? emailErr;
-    String? passErr;
-
-    if (email.isEmpty) {
-      emailErr = "Email is required";
-    } else if (!email.contains('@')) {
-      emailErr = "Invalid email format";
-    }
-
-    if (password.isEmpty) {
-      passErr = "Password is required";
-    } else if (password.length < 6) {
-      passErr = "Password must be at least 6 characters";
-    }
-
-    return {'email': emailErr, 'password': passErr};
-  }
+class LoginViewModel extends StateNotifier<LoginStateModel> {
+  LoginViewModel() : super(LoginStateModel());
 
   Future<void> login(
     String email,
     String password,
     VoidCallback onSuccess,
   ) async {
-    final errors = _getValidationErrors(email, password);
-    final bool isValid = errors['email'] == null && errors['password'] == null;
+    // Validation using separate class
+    final emailErr = ValidationManager.validateEmail(email);
+    final passErr = ValidationManager.validatePassword(password);
 
-    if (!isValid) {
-      state = state.copyWith(
-        isLoading: false,
-        emailError: errors['email'],
-        passwordError: errors['password'],
-      );
+    if (emailErr != null || passErr != null) {
+      state = state.copyWith(emailError: emailErr, passwordError: passErr);
       return;
     }
 
+    // Clear errors and start loading
     state = state.copyWith(
       isLoading: true,
       emailError: null,
@@ -59,9 +29,7 @@ class LoginViewModel extends StateNotifier<LoginModel> {
     );
 
     try {
-      // 4. API Call
       await Future.delayed(const Duration(seconds: 2));
-
       state = state.copyWith(isLoading: false);
       onSuccess();
     } catch (e) {
@@ -71,6 +39,6 @@ class LoginViewModel extends StateNotifier<LoginModel> {
 }
 
 final loginProvider =
-    StateNotifierProvider.autoDispose<LoginViewModel, LoginModel>((ref) {
+    StateNotifierProvider.autoDispose<LoginViewModel, LoginStateModel>((ref) {
       return LoginViewModel();
     });
