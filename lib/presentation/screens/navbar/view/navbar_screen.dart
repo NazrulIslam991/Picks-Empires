@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:picks_empire/core/constrants/app_images.dart';
-import 'package:picks_empire/presentation/screens/casino/view/casino_screen.dart';
-import 'package:picks_empire/presentation/screens/crypto/view/crypto_screen.dart';
 import 'package:picks_empire/presentation/screens/home/view/home_screen.dart';
 import 'package:picks_empire/presentation/screens/navbar/view_model/navbar_view_model.dart';
 import 'package:picks_empire/presentation/screens/sports/view/sports_screen.dart';
-import 'package:picks_empire/presentation/screens/strocks/view/strocks_screen.dart';
 
 class NavbarScreen extends ConsumerWidget {
   const NavbarScreen({super.key});
@@ -18,9 +15,12 @@ class NavbarScreen extends ConsumerWidget {
     final List<Widget> screen = [
       HomeScreen(),
       SportsScreen(),
-      StrocksScreen(),
-      CryptoScreen(),
-      CasinoScreen(),
+      SportsScreen(),
+      SportsScreen(),
+      SportsScreen(),
+      // StrocksScreen(),
+      // CryptoScreen(),
+      // CasinoScreen(),
     ];
     return Scaffold(
       extendBody: true,

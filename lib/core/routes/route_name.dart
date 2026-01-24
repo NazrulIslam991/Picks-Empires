@@ -23,4 +23,10 @@ class RouteName {
   static const String homeScreen = "/homeScreen"; // homeScreen
   static const String notificationScreen =
       "/notificationScreen"; // notificationScreen
+  static const String profileScreen = "/profileScreen"; // profileScreen
+  static const String settingScreen = "/settingScreen"; // settingScreen
+  static const String legalAndPolicyScreen =
+      "/legalAndPolicyScreen"; // legalAndPolicyScreen
+  static const String helpAndSupportScreen =
+      "/helpAndSupportScreen"; // helpAndSupportScreen
 }

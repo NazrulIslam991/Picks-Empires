@@ -60,15 +60,26 @@ class AppRoute {
         return MaterialPageRoute(
           builder: (_) => const SubscriptionSuccessfullScreen(),
         ); // subSuccessScreen screen
-      case RouteName.homeScreen:
-        return MaterialPageRoute(
-          builder: (_) => const HomeScreen(),
-        ); // home screen
       case RouteName.notificationScreen:
         return MaterialPageRoute(
           builder: (_) => const NotificationScreen(),
         ); // home screen
-
+      case RouteName.profileScreen:
+        return MaterialPageRoute(
+          builder: (_) => const ProfileScreen(),
+        ); // Profile screen
+      case RouteName.settingScreen:
+        return MaterialPageRoute(
+          builder: (_) => const SettingScreen(),
+        ); // setting screen
+      case RouteName.helpAndSupportScreen:
+        return MaterialPageRoute(
+          builder: (_) => const HelpAndSupportScreen(),
+        ); // helpAndSupportScreen screen
+      case RouteName.legalAndPolicyScreen:
+        return MaterialPageRoute(
+          builder: (_) => const LegalAndPolicyScreen(),
+        ); // legalAndPolicyScreen screen
       default:
         return MaterialPageRoute(
           builder: (_) =>
