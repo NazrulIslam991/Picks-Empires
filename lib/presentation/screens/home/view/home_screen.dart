@@ -21,7 +21,7 @@ class HomeScreen extends StatelessWidget {
           padding: const EdgeInsets.only(left: 16),
           child: InkWell(
             onTap: () {
-              // prifile
+              Navigator.pushNamed(context, RouteName.settingScreen);
             },
             child: CircleAvatar(backgroundImage: AssetImage(AppImages.profile)),
           ),
