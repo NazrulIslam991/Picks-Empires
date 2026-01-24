@@ -21,7 +21,7 @@ class HomeScreen extends StatelessWidget {
           padding: const EdgeInsets.only(left: 16),
           child: InkWell(
             onTap: () {
-              //print("print");
+              // prifile
             },
             child: CircleAvatar(backgroundImage: AssetImage(AppImages.profile)),
           ),
@@ -44,7 +44,9 @@ class HomeScreen extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, RouteName.notificationScreen);
+            },
             icon: Icon(Icons.notifications_outlined, color: Colors.white),
           ),
         ],
@@ -55,8 +57,8 @@ class HomeScreen extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(
                 top: 15,
-                left: 12,
-                right: 12,
+                left: 10,
+                right: 10,
                 //bottom: 15,
               ),
               child: Column(

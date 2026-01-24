@@ -64,6 +64,10 @@ class AppRoute {
         return MaterialPageRoute(
           builder: (_) => const HomeScreen(),
         ); // home screen
+      case RouteName.notificationScreen:
+        return MaterialPageRoute(
+          builder: (_) => const NotificationScreen(),
+        ); // home screen
 
       default:
         return MaterialPageRoute(

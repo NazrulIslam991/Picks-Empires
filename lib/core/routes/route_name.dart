@@ -21,4 +21,6 @@ class RouteName {
   static const String subSuccessScreen =
       "/subSuccessScreen"; // subSuccessScreen
   static const String homeScreen = "/homeScreen"; // homeScreen
+  static const String notificationScreen =
+      "/notificationScreen"; // notificationScreen
 }

@@ -10,6 +10,7 @@ import 'package:picks_empire/presentation/screens/auth/login/view/login_screen.d
 import 'package:picks_empire/presentation/screens/auth/signup/view/signup_screen.dart';
 import 'package:picks_empire/presentation/screens/home/view/home_screen.dart';
 import 'package:picks_empire/presentation/screens/navbar/view/navbar_screen.dart';
+import 'package:picks_empire/presentation/screens/notification/view/notification_screen.dart';
 import 'package:picks_empire/presentation/screens/splash/splash_screen.dart';
 import 'package:picks_empire/presentation/screens/subscription/view/add_new_card_screen.dart';
 import 'package:picks_empire/presentation/screens/subscription/view/confirmation_screen.dart';

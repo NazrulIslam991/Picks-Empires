@@ -46,7 +46,11 @@ class SubscriptionSuccessfullScreen extends StatelessWidget {
                   child: ElevatedButton(
                     style: getElevatedButtonStyle(color: AppColors.BtnColor),
                     onPressed: () {
-                      Navigator.pushNamed(context, RouteName.homeScreen);
+                      Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        RouteName.navBarScreen,
+                        (predicate) => false,
+                      );
                     },
                     child: Text(
                       "Back to Home",
