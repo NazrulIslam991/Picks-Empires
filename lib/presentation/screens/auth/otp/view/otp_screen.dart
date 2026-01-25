@@ -2,7 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:picks_empire/core/constrants/app_colors.dart';
 import 'package:picks_empire/core/routes/route_name.dart';
-import 'package:picks_empire/data/model/auth_model/user_model.dart';
+import 'package:picks_empire/domain/entities/auth_model/user_model.dart';
 import 'package:picks_empire/presentation/screens/widgets/background_widget.dart';
 import 'package:picks_empire/presentation/screens/widgets/custom_back_btn.dart';
 import 'package:pinput/pinput.dart';

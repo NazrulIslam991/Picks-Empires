@@ -1,11 +1,11 @@
-class SignupModel {
+class SignupStateModel {
   final String? nameError;
   final String? emailError;
   final String? passwordError;
   final String? confirmError;
   final bool isLoading;
 
-  SignupModel({
+  SignupStateModel({
     this.nameError,
     this.emailError,
     this.passwordError,
@@ -13,14 +13,14 @@ class SignupModel {
     this.isLoading = false,
   });
 
-  SignupModel copyWith({
+  SignupStateModel copyWith({
     String? nameError,
     String? emailError,
     String? passwordError,
     String? confrimPasswordError,
     bool? isLoading,
   }) {
-    return SignupModel(
+    return SignupStateModel(
       nameError: nameError,
       emailError: emailError,
       passwordError: passwordError,

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:picks_empire/core/constrants/app_images.dart';
 
 import '../../../core/routes/route_name.dart';
@@ -31,11 +32,11 @@ class _SplashScreenState extends State<SplashScreen> {
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        // systemOverlayStyle: const SystemUiOverlayStyle(
-        //   statusBarColor: Colors.transparent,
-        //   statusBarIconBrightness: Brightness.light,
-        //   statusBarBrightness: Brightness.dark,
-        // ),
+        systemOverlayStyle: const SystemUiOverlayStyle(
+          statusBarColor: Colors.transparent,
+          statusBarIconBrightness: Brightness.light,
+          statusBarBrightness: Brightness.dark,
+        ),
       ),
       body: Container(
         width: double.infinity,

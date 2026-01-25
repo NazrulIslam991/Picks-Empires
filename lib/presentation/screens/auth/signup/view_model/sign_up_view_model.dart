@@ -1,11 +1,11 @@
 import 'package:flutter_riverpod/legacy.dart';
-import 'package:picks_empire/data/model/auth_model/signup_model.dart';
-import 'package:picks_empire/data/model/auth_model/user_model.dart';
+import 'package:picks_empire/domain/entities/auth_model/user_model.dart';
+import 'package:picks_empire/presentation/screens/auth/signup/view_model/signup_state.dart';
 
 import '../../../../../core/constrants/validator.dart';
 
-class SignUpViewModel extends StateNotifier<SignupModel> {
-  SignUpViewModel() : super(SignupModel());
+class SignUpViewModel extends StateNotifier<SignupStateModel> {
+  SignUpViewModel() : super(SignupStateModel());
 
   // Sign Up call
   Future<void> SignUp(
@@ -57,6 +57,6 @@ class SignUpViewModel extends StateNotifier<SignupModel> {
 }
 
 final signUpProvider =
-    StateNotifierProvider.autoDispose<SignUpViewModel, SignupModel>((ref) {
+    StateNotifierProvider.autoDispose<SignUpViewModel, SignupStateModel>((ref) {
       return SignUpViewModel();
     });

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/legacy.dart';
-import 'package:picks_empire/data/model/auth_model/login_model.dart';
+import 'package:picks_empire/presentation/screens/auth/login/view_model/login_state.dart';
 
 import '../../../../../core/constrants/validator.dart';
 

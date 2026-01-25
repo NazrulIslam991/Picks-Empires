@@ -20,7 +20,7 @@ import 'package:picks_empire/presentation/screens/subscription/view/confirmation
 import 'package:picks_empire/presentation/screens/subscription/view/subscription_screen.dart';
 import 'package:picks_empire/presentation/screens/subscription/view/subscription_successfull_screen.dart';
 
-import '../../data/model/auth_model/user_model.dart';
+import '../../domain/entities/auth_model/user_model.dart';
 import '../../presentation/screens/auth/otp/view/otp_screen.dart';
 import '../../presentation/screens/onbording/view/onbording_screen.dart';
 

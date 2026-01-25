@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:picks_empire/core/constrants/app_images.dart';
 
-import '../../../../data/model/onbording_model/onbording_model.dart';
+import '../../../../domain/entities/onbording_model/onbording_model.dart';
 
 // for list
 final onboardingListProvider = Provider<List<OnbordingModel>>((ref) {
