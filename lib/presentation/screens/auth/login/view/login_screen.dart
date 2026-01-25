@@ -76,6 +76,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     obscureText: !isPasswordVisible,
                     keyboardType: TextInputType.text,
                     textInputAction: TextInputAction.done,
+                    maxLines: 1,
                     suffixIcon: IconButton(
                       onPressed: () => ref
                           .read(passwordVisibilityProvider.notifier)
