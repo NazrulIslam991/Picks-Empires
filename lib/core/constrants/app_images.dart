@@ -25,5 +25,5 @@ class AppImages {
   static const String money_logo = "$_basePath/money.png";
   static const String exportMoney_logo = "$_basePath/export_money.png";
   static const String card_logo = "$_basePath/card.png";
-  static const String sub_success_img = "$_basePath/sub_success_img.png";
+  static const String sub_success_img = "$_basePath/success.png";
 }

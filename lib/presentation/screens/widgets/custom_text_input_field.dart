@@ -15,6 +15,7 @@ class CustomTextField extends StatelessWidget {
   final Widget? prefixIcon;
   final String? prefixText;
   final TextStyle? prefixStyle;
+  final int? maxLines;
   const CustomTextField({
     super.key,
     required this.controller,
@@ -27,6 +28,7 @@ class CustomTextField extends StatelessWidget {
     this.prefixIcon,
     this.prefixText,
     this.prefixStyle,
+    this.maxLines,
   });
 
   @override
@@ -37,6 +39,7 @@ class CustomTextField extends StatelessWidget {
       obscureText: obscureText,
       keyboardType: keyboardType,
       textInputAction: textInputAction,
+      maxLines: maxLines,
       style: getRegularStyle(color: Colors.white, fontSize: 14),
       decoration: InputDecoration(
         filled: true,

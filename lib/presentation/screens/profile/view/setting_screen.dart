@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:picks_empire/core/constrants/app_images.dart';
 import 'package:picks_empire/core/routes/route_name.dart';
+import 'package:picks_empire/presentation/screens/widgets/custom_dialog.dart';
 
 import '../../../../core/resources/style_manager.dart';
 import '../../widgets/background_widget.dart';
@@ -151,7 +152,14 @@ class SettingScreen extends StatelessWidget {
 
                   // Logout Button
                   ListTile(
-                    onTap: () {},
+                    onTap: () {
+                      showCustomDialog(
+                        context: context,
+                        title: "Logout",
+                        subtitle: "Are you sure you want to log out?",
+                        onConfirm: () {},
+                      );
+                    },
                     contentPadding: EdgeInsets.zero,
                     leading: const Icon(Icons.logout, color: Colors.redAccent),
                     title: Text(
