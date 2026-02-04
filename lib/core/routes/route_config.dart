@@ -20,10 +20,7 @@ class AppRoute {
           builder: (_) => const SignupScreen(),
         ); // SignUp screen
       case RouteName.otpScreen:
-        final user = settings.arguments as UserModel;
-        return MaterialPageRoute(
-          builder: (_) => OtpScreen(user: user),
-        ); // OTP screen
+        return MaterialPageRoute(builder: (_) => OtpScreen()); // OTP screen
       case RouteName.categoryScreen:
         return MaterialPageRoute(
           builder: (_) => const CategoryScreen(),

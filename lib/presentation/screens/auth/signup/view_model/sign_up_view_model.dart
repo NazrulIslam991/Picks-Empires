@@ -1,62 +1,68 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/legacy.dart';
-import 'package:picks_empire/domain/entities/auth_model/user_model.dart';
+import 'package:picks_empire/core/constrants/validator.dart';
+import 'package:picks_empire/core/network/api_clients.dart';
+import 'package:picks_empire/data/repository/auth_repository_impl/auth_repository_impl.dart';
+import 'package:picks_empire/data/sources/remote/auth_remote_source.dart';
 import 'package:picks_empire/presentation/screens/auth/signup/view_model/signup_state.dart';
 
-import '../../../../../core/constrants/validator.dart';
-
 class SignUpViewModel extends StateNotifier<SignupStateModel> {
-  SignUpViewModel() : super(SignupStateModel());
+  final AuthRepositoryImpl _repository;
+  SignUpViewModel(this._repository) : super(SignupStateModel());
 
-  // Sign Up call
   Future<void> SignUp(
     String name,
     String email,
     String password,
-    String confirm_password,
-    Function(UserModel user) onSuccess,
+    String conPassword,
+    VoidCallback onSuccess,
   ) async {
-    // Validation using separate class
-    final emailErr = ValidationManager.validateEmail(email);
+    final nameErr = ValidationManager.validateName(name);
+    final emalErr = ValidationManager.validateEmail(email);
     final passErr = ValidationManager.validatePassword(password);
-    final nameErr = ValidationManager.validatePassword(password);
-    final confirmPassErr = ValidationManager.validateConfirmPassword(
+    final conPassErr = ValidationManager.validateConfirmPassword(
+      conPassword,
       password,
-      confirm_password,
     );
+    state = state.copyWith(isLoading: true, nameError: null, emailError: null);
 
     if (nameErr != null ||
+        emalErr != null ||
         passErr != null ||
-        passErr != null ||
-        confirmPassErr != null) {
+        conPassErr != null) {
       state = state.copyWith(
         nameError: nameErr,
-        emailError: emailErr,
+        emailError: emalErr,
         passwordError: passErr,
-        confrimPasswordError: confirmPassErr,
+        confirmPasswordError: conPassErr,
+        isLoading: false,
       );
       return;
     }
-
-    // Clear errors and start loading
     state = state.copyWith(
-      isLoading: true,
       nameError: null,
       emailError: null,
       passwordError: null,
-      confrimPasswordError: null,
+      confirmPasswordError: null,
+      isLoading: true,
     );
     try {
-      await Future.delayed(const Duration(seconds: 2));
+      print("$name $email $password $conPassword");
+      final user = await _repository.signUp(name, email, password);
       state = state.copyWith(isLoading: false);
-      final userData = UserModel(name: name, email: email, password: password);
-      onSuccess(userData);
+      onSuccess();
     } catch (e) {
+      // Example of setting a specific error based on response
       state = state.copyWith(isLoading: false);
+      print("SIGNUP FAILED ERROR: $e");
     }
   }
 }
 
 final signUpProvider =
     StateNotifierProvider.autoDispose<SignUpViewModel, SignupStateModel>((ref) {
-      return SignUpViewModel();
+      final apiClient = ApiClient();
+      final remouteSource = AuthRemoteSource(apiClient);
+      final repository = AuthRepositoryImpl(remouteSource);
+      return SignUpViewModel(repository);
     });

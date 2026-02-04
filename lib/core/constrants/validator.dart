@@ -5,9 +5,9 @@ class ValidationManager {
     if (value == null || value.isEmpty) {
       return "Full name is required";
     }
-    // if (value.length < 3) {
-    //   return "Name must be at least 3 characters";
-    // }
+    if (value.length < 3) {
+      return "Name must be at least 3 characters";
+    }
     return null;
   }
 

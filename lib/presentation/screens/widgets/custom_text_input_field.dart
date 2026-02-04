@@ -33,7 +33,6 @@ class CustomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("Field: $hintText, Error: $errorText");
     return TextFormField(
       controller: controller,
       obscureText: obscureText,

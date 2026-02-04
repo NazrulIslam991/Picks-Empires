@@ -1,31 +1,31 @@
 class SignupStateModel {
+  final bool isLoading;
   final String? nameError;
   final String? emailError;
   final String? passwordError;
-  final String? confirmError;
-  final bool isLoading;
+  final String? confirmPasswordError;
 
   SignupStateModel({
+    this.isLoading = false,
     this.nameError,
     this.emailError,
     this.passwordError,
-    this.confirmError,
-    this.isLoading = false,
+    this.confirmPasswordError,
   });
 
   SignupStateModel copyWith({
+    bool? isLoading,
     String? nameError,
     String? emailError,
     String? passwordError,
-    String? confrimPasswordError,
-    bool? isLoading,
+    String? confirmPasswordError,
   }) {
     return SignupStateModel(
+      isLoading: isLoading ?? this.isLoading,
       nameError: nameError,
       emailError: emailError,
       passwordError: passwordError,
-      confirmError: confrimPasswordError,
-      isLoading: isLoading ?? this.isLoading,
+      confirmPasswordError: confirmPasswordError,
     );
   }
 }

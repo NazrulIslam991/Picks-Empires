@@ -2,7 +2,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:picks_empire/core/constrants/app_colors.dart';
 import 'package:picks_empire/core/routes/route_name.dart';
-import 'package:picks_empire/domain/entities/auth_model/user_model.dart';
 import 'package:picks_empire/presentation/screens/widgets/background_widget.dart';
 import 'package:picks_empire/presentation/screens/widgets/custom_back_btn.dart';
 import 'package:pinput/pinput.dart';
@@ -10,8 +9,7 @@ import 'package:pinput/pinput.dart';
 import '../../../../../../core/resources/style_manager.dart';
 
 class OtpScreen extends StatefulWidget {
-  final UserModel user;
-  const OtpScreen({super.key, required this.user});
+  const OtpScreen({super.key});
 
   @override
   State<OtpScreen> createState() => _OtpScreenState();
@@ -41,7 +39,7 @@ class _OtpScreenState extends State<OtpScreen> {
                 ),
                 SizedBox(height: 5),
                 Text(
-                  "We have just sent you 4 digit code via your email '${widget.user.email},'",
+                  "We have just sent you 4 digit code via your email },'",
                   style: getRegularStyle(color: Colors.white70, fontSize: 14),
                 ),
 

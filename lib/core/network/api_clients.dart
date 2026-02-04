@@ -12,21 +12,20 @@ class ApiClient {
   static final Dio _dio = Dio(
     BaseOptions(
       baseUrl: ApiEndpoints.baseUrl,
-      connectTimeout: Duration(seconds: 10),
-      sendTimeout: Duration(seconds: 10),
-      receiveTimeout: Duration(seconds: 10),
+      connectTimeout: Duration(seconds: 40),
+      sendTimeout: Duration(seconds: 40),
+      receiveTimeout: Duration(seconds: 40),
     ),
   );
   static Map<String, String>? headers;
 
   static Future<void> headerSet(String? token) async {
-    final tokn = await SharedPreferenceData.getToken();
-    log(token ?? 'token');
-    log(tokn ?? 'tokn');
+    final storedToken = await SharedPreferenceData.getToken();
+    final activeToken = token ?? storedToken;
+
     headers = {
       'Content-Type': 'application/json',
-      if (token != null) 'Authorization': 'Bearer $token',
-      if (tokn != null) 'Authorization': 'Bearer $tokn',
+      if (activeToken != null) 'Authorization': 'Bearer $activeToken',
     };
   }
 
@@ -58,7 +57,6 @@ class ApiClient {
   Future<dynamic> postRequest({
     required String endpoints,
     Map<String, dynamic>? body,
-
     FormData? formData,
   }) async {
     try {
@@ -70,13 +68,15 @@ class ApiClient {
           headers: headers ?? {"Content-Type": "application/json"},
         ),
       );
-      //log("\nPOST Request Successful: ${response.data}\n");
+      log("\nPOST Request Successful: ${response.data}\n");
       return ResposeHandle.handleResponse(response);
     } catch (e) {
       if (e is DioException) {
         ErrorHandle.handleDioError(e);
+        rethrow;
       } else {
         log('Non-Dio error: $e');
+        rethrow;
       }
     }
   }

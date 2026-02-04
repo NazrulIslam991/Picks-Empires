@@ -23,14 +23,25 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
+
+  @override
+  void dispose() {
+    fullNameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final watch = ref.watch(signUpProvider);
-    final passwordVisivility = ref.watch(passwordVisibilityProvider);
-    final confirmPasswordVisivility = ref.watch(
+    final passwordVisibility = ref.watch(passwordVisibilityProvider);
+    final confirmPasswordVisibility = ref.watch(
       confirmPasswordVisibilityProvider,
     );
     final read = ref.read(signUpProvider.notifier);
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       backgroundColor: Colors.transparent,
@@ -51,158 +62,152 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                     "Create New Account 🔥",
                     style: getSemiBoldStyle(color: Colors.white, fontSize: 20),
                   ),
-                  SizedBox(height: 5),
+                  const SizedBox(height: 5),
                   Text(
                     "Please fill your detail information",
                     style: getRegularStyle(color: Colors.white70, fontSize: 14),
                   ),
+                  const SizedBox(height: 30),
 
-                  SizedBox(height: 30),
-                  // full name title
-                  Text(
-                    "Full Name",
-                    style: getRegularStyle(color: Colors.grey, fontSize: 12),
-                  ),
-                  SizedBox(height: 7),
-                  // Full Name input field
+                  _buildTitle("Full Name"),
                   CustomTextField(
                     controller: fullNameController,
                     hintText: "Enter your full name",
-                    errorText: watch.nameError,
                     keyboardType: TextInputType.name,
+                    errorText: watch.nameError,
                     textInputAction: TextInputAction.next,
                   ),
-                  SizedBox(height: 10),
-                  // Enter your email title
-                  Text(
-                    "Email",
-                    style: getRegularStyle(color: Colors.grey, fontSize: 12),
-                  ),
-                  SizedBox(height: 7),
-                  // Enter your email input field
+
+                  const SizedBox(height: 10),
+                  _buildTitle("Email"),
                   CustomTextField(
                     controller: emailController,
                     hintText: "Enter your email",
                     errorText: watch.emailError,
-                    keyboardType: TextInputType.name,
+                    keyboardType: TextInputType.emailAddress,
                     textInputAction: TextInputAction.next,
                   ),
-                  SizedBox(height: 10),
-                  // Enter password title
-                  Text(
-                    "Enter password",
-                    style: getRegularStyle(color: Colors.grey, fontSize: 12),
-                  ),
-                  SizedBox(height: 7),
-                  // Enter your password input field
+
+                  const SizedBox(height: 10),
+                  _buildTitle("Enter password"),
                   CustomTextField(
                     controller: passwordController,
                     hintText: "Enter your password",
-                    keyboardType: TextInputType.name,
+                    obscureText: passwordVisibility,
                     errorText: watch.passwordError,
-                    obscureText: passwordVisivility,
+                    maxLines: 1,
                     textInputAction: TextInputAction.next,
+
                     suffixIcon: IconButton(
                       onPressed: () => ref
                           .read(passwordVisibilityProvider.notifier)
                           .toggle(),
                       icon: Icon(
-                        passwordVisivility
+                        passwordVisibility
                             ? Icons.visibility
                             : Icons.visibility_off,
+                        color: Colors.white70,
                       ),
                     ),
+                    keyboardType: TextInputType.text,
                   ),
-                  SizedBox(height: 10),
-                  //Confirm password title
-                  Text(
-                    "Confirm password",
-                    style: getRegularStyle(color: Colors.grey, fontSize: 12),
-                  ),
-                  SizedBox(height: 7),
-                  //Re-enter your password input field
+
+                  const SizedBox(height: 10),
+                  _buildTitle("Confirm password"),
                   CustomTextField(
                     controller: confirmPasswordController,
                     hintText: "Re-enter your password",
-                    keyboardType: TextInputType.name,
                     textInputAction: TextInputAction.done,
-                    obscureText: confirmPasswordVisivility,
-                    errorText: watch.confirmError,
+                    obscureText: confirmPasswordVisibility,
+                    errorText: watch.confirmPasswordError,
+                    maxLines: 1,
+
                     suffixIcon: IconButton(
                       onPressed: () => ref
-                          .read(passwordVisibilityProvider.notifier)
+                          .read(confirmPasswordVisibilityProvider.notifier)
                           .toggle(),
                       icon: Icon(
-                        confirmPasswordVisivility
+                        confirmPasswordVisibility
                             ? Icons.visibility
                             : Icons.visibility_off,
+                        color: Colors.white70,
                       ),
                     ),
+                    keyboardType: TextInputType.text,
                   ),
 
-                  SizedBox(height: 20),
+                  const SizedBox(height: 30),
 
-                  // continue button
+                  // signUp button
                   SizedBox(
                     height: 50,
                     width: double.infinity,
                     child: ElevatedButton(
                       style: getElevatedButtonStyle(color: AppColors.BtnColor),
-                      onPressed: watch.isLoading
-                          ? null
-                          : () {
-                              read.SignUp(
-                                fullNameController.text,
-                                emailController.text,
-                                passwordController.text,
-                                confirmPasswordController.text,
-                                (userData) {
-                                  Navigator.pushNamed(
-                                    context,
-                                    RouteName.otpScreen,
-                                    arguments: userData,
-                                  );
-                                },
-                              );
-                            },
+                      onPressed: watch.isLoading ? null : _handleSignup,
                       child: watch.isLoading
-                          ? CircularProgressIndicator(color: Colors.white)
+                          ? const CircularProgressIndicator(color: Colors.black)
                           : Text(
                               "Continue",
                               style: getSemiBoldStyle(color: Colors.black),
                             ),
                     ),
                   ),
-                  SizedBox(height: 30),
-                  // Have an account? Login
-                  Center(
-                    child: RichText(
-                      text: TextSpan(
-                        text: "Have an account? ",
-                        style: getRegularStyle(
-                          color: Colors.grey,
-                          fontSize: 13,
-                        ),
-                        children: [
-                          TextSpan(
-                            text: "Login",
-                            style: getSemiBoldStyle(color: AppColors.BtnColor),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                                Navigator.pushNamed(
-                                  context,
-                                  RouteName.logInScreen,
-                                );
-                              },
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                  const SizedBox(height: 30),
+                  _buildLoginLink(context),
                 ],
               ),
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+  // signup process
+  void _handleSignup() {
+    final signupNotifier = ref.read(signUpProvider.notifier);
+
+    // 3. Execute the Signup logic
+    signupNotifier.SignUp(
+      fullNameController.text.trim(),
+      emailController.text.trim(),
+      passwordController.text.trim(),
+      confirmPasswordController.text.trim(),
+      () {
+        // 4. Handle Navigation on Success
+        if (mounted) {
+          Navigator.pushNamed(context, RouteName.otpScreen);
+        }
+      },
+    );
+  }
+
+  Widget _buildTitle(String title) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 7),
+      child: Text(
+        title,
+        style: getRegularStyle(color: Colors.grey, fontSize: 12),
+      ),
+    );
+  }
+
+  Widget _buildLoginLink(BuildContext context) {
+    return Center(
+      child: RichText(
+        text: TextSpan(
+          text: "Have an account? ",
+          style: getRegularStyle(color: Colors.grey, fontSize: 13),
+          children: [
+            TextSpan(
+              text: "Login",
+              style: getSemiBoldStyle(color: AppColors.BtnColor),
+              recognizer: TapGestureRecognizer()
+                ..onTap = () =>
+                    Navigator.pushNamed(context, RouteName.logInScreen),
+            ),
+          ],
         ),
       ),
     );
