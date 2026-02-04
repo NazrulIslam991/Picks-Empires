@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:picks_empire/core/constrants/app_colors.dart';
 import 'package:picks_empire/core/routes/route_name.dart';
 import 'package:picks_empire/presentation/screens/widgets/background_widget.dart';
@@ -7,18 +8,23 @@ import 'package:picks_empire/presentation/screens/widgets/custom_back_btn.dart';
 import 'package:pinput/pinput.dart';
 
 import '../../../../../../core/resources/style_manager.dart';
+import '../view_model/otp_view_model.dart';
 
-class OtpScreen extends StatefulWidget {
-  const OtpScreen({super.key});
+class OtpScreen extends ConsumerStatefulWidget {
+  final String email;
+  const OtpScreen({super.key, required this.email});
 
   @override
-  State<OtpScreen> createState() => _OtpScreenState();
+  ConsumerState<OtpScreen> createState() => _OtpScreenState();
 }
 
-class _OtpScreenState extends State<OtpScreen> {
+class _OtpScreenState extends ConsumerState<OtpScreen> {
   final pinController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final optState = ref.watch(otpProvider);
+    final read = ref.read(otpProvider.notifier);
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       backgroundColor: Colors.transparent,
@@ -50,7 +56,7 @@ class _OtpScreenState extends State<OtpScreen> {
                   child: Pinput(
                     controller: pinController,
                     separatorBuilder: (index) => const SizedBox(width: 16),
-                    length: 4,
+                    length: 6,
                     showCursor: true,
                     defaultPinTheme: PinTheme(
                       width: 56,
@@ -75,10 +81,16 @@ class _OtpScreenState extends State<OtpScreen> {
                   child: ElevatedButton(
                     style: getElevatedButtonStyle(color: AppColors.BtnColor),
                     onPressed: () {
-                      Navigator.pushNamedAndRemoveUntil(
-                        context,
-                        RouteName.categoryScreen,
-                        (predicate) => false,
+                      read.VerifyOtp(
+                        widget.email,
+                        pinController.text.trim(),
+                        () {
+                          Navigator.pushNamedAndRemoveUntil(
+                            context,
+                            RouteName.categoryScreen,
+                            (predicate) => false,
+                          );
+                        },
                       );
                     },
                     child: Text(

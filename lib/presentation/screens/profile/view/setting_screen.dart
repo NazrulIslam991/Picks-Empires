@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:picks_empire/core/constrants/app_images.dart';
 import 'package:picks_empire/core/routes/route_name.dart';
+import 'package:picks_empire/data/sources/local_shared_preference/shared_preferene.dart';
 import 'package:picks_empire/presentation/screens/widgets/custom_dialog.dart';
 
 import '../../../../core/resources/style_manager.dart';
@@ -157,7 +158,14 @@ class SettingScreen extends StatelessWidget {
                         context: context,
                         title: "Logout",
                         subtitle: "Are you sure you want to log out?",
-                        onConfirm: () {},
+                        onConfirm: () {
+                          SharedPreferenceData.removeToken();
+                          Navigator.pushNamedAndRemoveUntil(
+                            context,
+                            RouteName.logInScreen,
+                            (predicate) => false,
+                          );
+                        },
                       );
                     },
                     contentPadding: EdgeInsets.zero,

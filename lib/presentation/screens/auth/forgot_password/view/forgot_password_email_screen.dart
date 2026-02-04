@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:picks_empire/presentation/screens/auth/forgot_password/view_model/forgot_password_view_model.dart';
 
 import '../../../../../core/constrants/app_colors.dart';
 import '../../../../../core/resources/style_manager.dart';
@@ -7,20 +9,21 @@ import '../../../widgets/background_widget.dart';
 import '../../../widgets/custom_back_btn.dart';
 import '../../../widgets/custom_text_input_field.dart';
 
-class ForgotPasswordEmailScreen extends StatefulWidget {
+class ForgotPasswordEmailScreen extends ConsumerStatefulWidget {
   const ForgotPasswordEmailScreen({super.key});
 
   @override
-  State<ForgotPasswordEmailScreen> createState() =>
+  ConsumerState<ForgotPasswordEmailScreen> createState() =>
       _ForgotPasswordEmailScreenState();
 }
 
-class _ForgotPasswordEmailScreenState extends State<ForgotPasswordEmailScreen> {
+class _ForgotPasswordEmailScreenState
+    extends ConsumerState<ForgotPasswordEmailScreen> {
   final emailController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    //final watch = ref.watch(signUpProvider);
-    //final read = ref.read(signUpProvider.notifier);
+    final watch = ref.watch(forgotPasswordProvider);
+    final read = ref.read(forgotPasswordProvider.notifier);
     return Scaffold(
       extendBodyBehindAppBar: true,
       backgroundColor: Colors.transparent,
@@ -72,10 +75,13 @@ class _ForgotPasswordEmailScreenState extends State<ForgotPasswordEmailScreen> {
                     child: ElevatedButton(
                       style: getElevatedButtonStyle(color: AppColors.BtnColor),
                       onPressed: () {
-                        Navigator.pushNamed(
-                          context,
-                          RouteName.forgotPassword_OTPScreen,
-                        );
+                        read.forgotPassword(emailController.text.trim(), () {
+                          Navigator.pushNamed(
+                            context,
+                            RouteName.forgotPassword_OTPScreen,
+                            arguments: emailController.text.trim(),
+                          );
+                        });
                       },
                       child: Text(
                         "Continue",

@@ -20,7 +20,8 @@ class AppRoute {
           builder: (_) => const SignupScreen(),
         ); // SignUp screen
       case RouteName.otpScreen:
-        return MaterialPageRoute(builder: (_) => OtpScreen()); // OTP screen
+        final email = settings.arguments as String;
+        return MaterialPageRoute(builder: (_) => OtpScreen(email: email));
       case RouteName.categoryScreen:
         return MaterialPageRoute(
           builder: (_) => const CategoryScreen(),
@@ -30,12 +31,14 @@ class AppRoute {
           builder: (_) => const ForgotPasswordEmailScreen(),
         ); // forgot password email screen
       case RouteName.forgotPassword_OTPScreen:
+        final email = settings.arguments as String;
         return MaterialPageRoute(
-          builder: (_) => const ForgotPasswordOtpScreen(),
+          builder: (_) => ForgotPasswordOtpScreen(email: email),
         ); // forgot password OTP screen
       case RouteName.resetPasswordScreen:
+        final email = settings.arguments as String;
         return MaterialPageRoute(
-          builder: (_) => const ResetPasswordScreen(),
+          builder: (_) => ResetPasswordScreen(email: email),
         ); // reset password screen
       case RouteName.navBarScreen:
         return MaterialPageRoute(

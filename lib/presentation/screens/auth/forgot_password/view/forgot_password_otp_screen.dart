@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pinput/pinput.dart';
 
 import '../../../../../core/constrants/app_colors.dart';
@@ -7,19 +8,24 @@ import '../../../../../core/resources/style_manager.dart';
 import '../../../../../core/routes/route_name.dart';
 import '../../../widgets/background_widget.dart';
 import '../../../widgets/custom_back_btn.dart';
+import '../view_model/forgot_password_view_model.dart';
 
-class ForgotPasswordOtpScreen extends StatefulWidget {
-  const ForgotPasswordOtpScreen({super.key});
+class ForgotPasswordOtpScreen extends ConsumerStatefulWidget {
+  final String email;
+  const ForgotPasswordOtpScreen({super.key, required this.email});
 
   @override
-  State<ForgotPasswordOtpScreen> createState() =>
+  ConsumerState<ForgotPasswordOtpScreen> createState() =>
       _ForgotPasswordOtpScreenState();
 }
 
-class _ForgotPasswordOtpScreenState extends State<ForgotPasswordOtpScreen> {
+class _ForgotPasswordOtpScreenState
+    extends ConsumerState<ForgotPasswordOtpScreen> {
   final pinController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final watch = ref.watch(forgotPasswordProvider);
+    final read = ref.read(forgotPasswordProvider.notifier);
     return Scaffold(
       extendBodyBehindAppBar: true,
       backgroundColor: Colors.transparent,
@@ -51,7 +57,7 @@ class _ForgotPasswordOtpScreenState extends State<ForgotPasswordOtpScreen> {
                   child: Pinput(
                     controller: pinController,
                     separatorBuilder: (index) => const SizedBox(width: 16),
-                    length: 4,
+                    length: 6,
                     showCursor: true,
                     defaultPinTheme: PinTheme(
                       width: 56,
@@ -76,9 +82,16 @@ class _ForgotPasswordOtpScreenState extends State<ForgotPasswordOtpScreen> {
                   child: ElevatedButton(
                     style: getElevatedButtonStyle(color: AppColors.BtnColor),
                     onPressed: () {
-                      Navigator.pushNamed(
-                        context,
-                        RouteName.resetPasswordScreen,
+                      read.VerifyOtp(
+                        widget.email,
+                        pinController.text.trim(),
+                        () {
+                          Navigator.pushNamed(
+                            context,
+                            RouteName.resetPasswordScreen,
+                            arguments: widget.email,
+                          );
+                        },
                       );
                     },
                     child: Text(
@@ -100,7 +113,10 @@ class _ForgotPasswordOtpScreenState extends State<ForgotPasswordOtpScreen> {
                         TextSpan(
                           text: "Resend Code",
                           style: getSemiBoldStyle(color: AppColors.BtnColor),
-                          recognizer: TapGestureRecognizer()..onTap = () {},
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              read.forgotPasswordResendOtp(widget.email, () {});
+                            },
                         ),
                       ],
                     ),

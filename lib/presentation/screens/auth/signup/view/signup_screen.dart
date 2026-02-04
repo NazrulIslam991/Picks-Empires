@@ -177,7 +177,11 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
       () {
         // 4. Handle Navigation on Success
         if (mounted) {
-          Navigator.pushNamed(context, RouteName.otpScreen);
+          Navigator.pushNamed(
+            context,
+            RouteName.otpScreen,
+            arguments: emailController.text.trim(),
+          );
         }
       },
     );

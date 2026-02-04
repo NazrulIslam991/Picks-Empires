@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:picks_empire/presentation/screens/auth/forgot_password/view_model/forgot_password_view_model.dart';
 
 import '../../../../../core/constrants/app_colors.dart';
 import '../../../../../core/resources/style_manager.dart';
@@ -7,22 +9,22 @@ import '../../../widgets/background_widget.dart';
 import '../../../widgets/custom_back_btn.dart';
 import '../../../widgets/custom_text_input_field.dart';
 
-class ResetPasswordScreen extends StatefulWidget {
-  const ResetPasswordScreen({super.key});
+class ResetPasswordScreen extends ConsumerStatefulWidget {
+  final String email;
+  const ResetPasswordScreen({super.key, required this.email});
 
   @override
-  State<ResetPasswordScreen> createState() => _ResetPasswordScreenState();
+  ConsumerState<ResetPasswordScreen> createState() =>
+      _ResetPasswordScreenState();
 }
 
-class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
-  final fullNameController = TextEditingController();
-  final emailController = TextEditingController();
+class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    // final watch = ref.watch(signUpProvider);
-    // final read = ref.read(signUpProvider.notifier);
+    final watch = ref.watch(forgotPasswordProvider);
+    final read = ref.read(forgotPasswordProvider.notifier);
     return Scaffold(
       extendBodyBehindAppBar: true,
       backgroundColor: Colors.transparent,
@@ -104,7 +106,19 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     child: ElevatedButton(
                       style: getElevatedButtonStyle(color: AppColors.BtnColor),
                       onPressed: () {
-                        Navigator.pushNamed(context, RouteName.logInScreen);
+                        if (passwordController.text ==
+                            confirmPasswordController.text) {
+                          read.resetPassword(
+                            widget.email,
+                            passwordController.text.trim(),
+                            () {
+                              Navigator.pushNamed(
+                                context,
+                                RouteName.logInScreen,
+                              );
+                            },
+                          );
+                        }
                       },
                       child: Text(
                         "Continue",

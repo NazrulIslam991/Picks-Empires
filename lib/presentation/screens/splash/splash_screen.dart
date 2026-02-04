@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:picks_empire/core/constrants/app_images.dart';
+import 'package:picks_empire/core/network/api_clients.dart';
+import 'package:picks_empire/data/sources/local_shared_preference/shared_preferene.dart';
 
 import '../../../core/routes/route_name.dart';
 
@@ -17,13 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 2), () {
-      Navigator.pushNamedAndRemoveUntil(
-        context,
-        RouteName.onBordingScreen,
-        (predicate) => false,
-      );
-    });
+    _checkAuth();
   }
 
   @override
@@ -56,5 +52,29 @@ class _SplashScreenState extends State<SplashScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> _checkAuth() async {
+    await Future.delayed(const Duration(seconds: 2));
+    final token = await SharedPreferenceData.getToken();
+    if (token != null && token.isNotEmpty) {
+      await ApiClient.headerSet(token);
+
+      if (mounted) {
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          RouteName.navBarScreen,
+          (predicate) => false,
+        );
+      }
+    } else {
+      if (mounted) {
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          RouteName.onBordingScreen,
+          (predicate) => false,
+        );
+      }
+    }
   }
 }

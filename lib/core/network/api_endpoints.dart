@@ -1,6 +1,13 @@
 class ApiEndpoints {
   static const String baseUrl = "http://192.168.7.102:4010/api";
   static const String register = 'auth/register';
+  static const String verifyOtp = 'auth/verify-email';
+  static const String login = 'auth/login';
+  static const String forgotPasswordEmail = 'auth/forgot-password';
+  static const String forgotPasswordOtp = 'auth/verify-forgot-password-otp';
+  static const String resetNewPassword = 'auth/reset-password';
+  static const String forgotPasswordResendOtp =
+      'auth/resend-forgot-password-otp';
 
   // static const String login = 'api/auth/login';
   // static const String switchRole = 'api/auth/switch-role';
