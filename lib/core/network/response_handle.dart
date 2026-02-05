@@ -6,7 +6,7 @@ class ResposeHandle {
   static dynamic handleResponse(Response response) {
     try {
       if (response.statusCode == 200 || response.statusCode == 201) {
-        // log("Success: ${jsonDecode(response.data.toString())}");
+        log("=====================SUCCESS======================");
         log("Success: ${response.data}");
         return response.data;
       } else {
@@ -14,7 +14,8 @@ class ResposeHandle {
         throw Exception("Error: ${response.statusCode}, ${response.data}");
       }
     } catch (e) {
-      throw Exception("Failed to parse response: $e");
+      log("Parse Error: $e");
+      throw Exception("Failed to handle response: $e");
     }
   }
 }

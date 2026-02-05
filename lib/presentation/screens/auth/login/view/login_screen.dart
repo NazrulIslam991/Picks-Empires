@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -5,6 +6,8 @@ import 'package:picks_empire/core/constrants/app_colors.dart';
 import 'package:picks_empire/core/constrants/app_images.dart';
 import 'package:picks_empire/core/resources/style_manager.dart';
 import 'package:picks_empire/core/routes/route_name.dart';
+import 'package:picks_empire/data/model/auth_model/login_model.dart';
+import 'package:picks_empire/presentation/screens/auth/login/services.dart';
 import 'package:picks_empire/presentation/screens/auth/login/view_model/login_view_model.dart';
 import 'package:picks_empire/presentation/screens/widgets/custom_text_input_field.dart';
 
@@ -37,6 +40,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     final loginState = ref.watch(loginProvider);
     final isPasswordVisible = ref.watch(passwordVisibilityProvider);
     final isRememberMe = ref.watch(rememberMeProvider);
+    final AuthService _authService = AuthService();
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -155,8 +159,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                 // 4. Validate Form before calling ViewModel
                                 if (_formKey.currentState!.validate()) {
                                   ref.read(loginProvider.notifier).login(
-                                    emailController.text,
-                                    passwordController.text,
+                                    LoginModel(
+                                      email: emailController.text.trim(),
+                                      password: passwordController.text.trim(),
+                                    ),
                                     () {
                                       Navigator.pushNamedAndRemoveUntil(
                                         context,
@@ -191,7 +197,30 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     _buildSocialBtn(
                       imagePath: AppImages.google,
                       title: "Continue with Google",
-                      onTap: () {},
+                      onTap: () async {
+                        UserCredential? userCredential = await _authService
+                            .signInWithGoogle();
+
+                        if (userCredential != null) {
+                          debugPrint("Login Successful and Token Saved!");
+
+                          if (!context.mounted) return;
+                          Navigator.pushNamedAndRemoveUntil(
+                            context,
+                            RouteName.navBarScreen,
+                            (route) => false,
+                          );
+                        } else {
+                          if (!context.mounted) return;
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text(
+                                "Google Sign-In failed or was cancelled.",
+                              ),
+                            ),
+                          );
+                        }
+                      },
                     ),
                     const SizedBox(height: 15),
                     _buildSocialBtn(

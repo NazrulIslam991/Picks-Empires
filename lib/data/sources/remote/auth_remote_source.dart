@@ -1,15 +1,22 @@
 import 'package:picks_empire/core/network/api_clients.dart';
 import 'package:picks_empire/core/network/api_endpoints.dart';
+import 'package:picks_empire/data/model/auth_model/forgot_password_model.dart';
+import 'package:picks_empire/data/model/auth_model/login_model.dart';
+import 'package:picks_empire/data/model/auth_model/otp_model.dart';
+import 'package:picks_empire/data/model/signup_model.dart';
+
+import '../../model/auth_model/forgot_password_otp_model.dart';
+import '../../model/auth_model/reset_new_password_model.dart';
 
 class AuthRemoteSource {
   final ApiClient _apiClient;
   AuthRemoteSource(this._apiClient);
 
-  Future<dynamic> SignUp(Map<String, dynamic> body) async {
+  Future<dynamic> SignUp(SignupModel data) async {
     try {
       final response = await _apiClient.postRequest(
         endpoints: ApiEndpoints.register,
-        body: body,
+        body: data.toJson(),
       );
       return response;
     } catch (e) {
@@ -18,11 +25,12 @@ class AuthRemoteSource {
   }
 
   // otp
-  Future<dynamic> OTP(Map<String, dynamic> body) async {
+  // otp verification
+  Future<dynamic> OTP(OtpModel otp) async {
     try {
       final response = await _apiClient.postRequest(
         endpoints: ApiEndpoints.verifyOtp,
-        body: body,
+        body: otp.toJson(),
       );
       return response;
     } catch (e) {
@@ -31,11 +39,11 @@ class AuthRemoteSource {
   }
 
   // login
-  Future<dynamic> Login(Map<String, dynamic> body) async {
+  Future<dynamic> Login(LoginModel model) async {
     try {
       final response = await _apiClient.postRequest(
         endpoints: ApiEndpoints.login,
-        body: body,
+        body: model.toJson(),
       );
       return response;
     } catch (e) {
@@ -44,11 +52,11 @@ class AuthRemoteSource {
   }
 
   // forgot password email section
-  Future<dynamic> ForgotPasswordEmail(Map<String, dynamic> body) async {
+  Future<dynamic> ForgotPasswordEmail(ForgotPasswordModel model) async {
     try {
       final response = await _apiClient.postRequest(
         endpoints: ApiEndpoints.forgotPasswordEmail,
-        body: body,
+        body: model.toJson(),
       );
       return response;
     } catch (e) {
@@ -57,11 +65,11 @@ class AuthRemoteSource {
   }
 
   // forgot password otp
-  Future<dynamic> ForgotPasswordOTP(Map<String, dynamic> body) async {
+  Future<dynamic> ForgotPasswordOTP(ForgotPasswordOTPModel model) async {
     try {
       final response = await _apiClient.postRequest(
         endpoints: ApiEndpoints.forgotPasswordOtp,
-        body: body,
+        body: model.toJson(),
       );
       return response;
     } catch (e) {
@@ -70,11 +78,11 @@ class AuthRemoteSource {
   }
 
   // forgot password otp
-  Future<dynamic> ResetNewPassword(Map<String, dynamic> body) async {
+  Future<dynamic> ResetNewPassword(ResetPasswordModel model) async {
     try {
       final response = await _apiClient.postRequest(
         endpoints: ApiEndpoints.resetNewPassword,
-        body: body,
+        body: model.toJson(),
       );
       return response;
     } catch (e) {

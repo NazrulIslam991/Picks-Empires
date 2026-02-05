@@ -1,48 +1,63 @@
-// ignore_for_file: avoid_print
+import 'dart:developer' as dev;
 
 import 'package:dio/dio.dart';
 
 class ErrorHandle {
   static String handleDioError(DioException e) {
+    dev.log(
+      '================== DIO ERROR ==================',
+      name: 'API_ERROR',
+    );
+    dev.log('Type: ${e.type}', name: 'API_ERROR');
+    dev.log('Path: ${e.requestOptions.path}', name: 'API_ERROR');
+
+    String errorMessage = "Something went wrong";
+
     switch (e.type) {
       case DioExceptionType.badCertificate:
-        print("error: ${e.message}");
-        return "Bad certificate. Please try again.";
+        errorMessage = "Bad certificate. Please try again.";
+        break;
+
       case DioExceptionType.badResponse:
-        print("badResponse: ${e.message}");
-        if (e.response != null) {
-          print("Status Code: ${e.response?.statusCode}");
-          print("Response Data: ${e.response?.data}");
-          // return e.response?.data;
+        final statusCode = e.response?.statusCode;
+        final data = e.response?.data;
+
+        dev.log('Status Code: $statusCode', name: 'API_ERROR');
+        dev.log('Response Data: $data', name: 'API_ERROR');
+
+        if (data is Map<String, dynamic> && data['message'] != null) {
+          errorMessage = data['message'].toString();
+        } else {
+          errorMessage = "Server error: $statusCode";
         }
-        print("error: ${e.message}");
-        if (e.response != null && e.response?.data != null) {
-          // Attempt to extract a message from server
-          final data = e.response?.data;
-          if (data is Map<String, dynamic> && data['message'] != null) {
-            return data['message'].toString();
-          }
-          return "Server error: ${e.response?.statusCode}";
-        }
-        return "Server error: ${e.message}";
-      case DioExceptionType.cancel:
-        print("error: ${e.message}");
-        return "Request was cancelled.";
+        break;
+
       case DioExceptionType.connectionError:
-        print("error: ${e.message}");
-        return "Connection error. Please check your internet.";
+        errorMessage = "Connection error. Please check your internet.";
+        break;
+
       case DioExceptionType.connectionTimeout:
-        print("error: ${e.message}");
-        return "Connection timeout. Please try again.";
-      case DioExceptionType.receiveTimeout:
-        print("error: ${e.message}");
-        return "Receive timeout. Please try again.";
       case DioExceptionType.sendTimeout:
-        print("error: ${e.message}");
-        return "Send timeout. Please try again.";
+      case DioExceptionType.receiveTimeout:
+        errorMessage = "Timeout error. Please try again.";
+        break;
+
+      case DioExceptionType.cancel:
+        errorMessage = "Request was cancelled.";
+        break;
+
       case DioExceptionType.unknown:
-        print("error: ${e.message}");
-        return "Unknown error occurred. Please try again.";
+      default:
+        errorMessage = "Unknown error occurred. Please try again.";
+        break;
     }
+
+    dev.log('Final Message: $errorMessage', name: 'API_ERROR');
+    dev.log(
+      '================================================',
+      name: 'API_ERROR',
+    );
+
+    return errorMessage;
   }
 }

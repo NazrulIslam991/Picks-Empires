@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:picks_empire/data/model/auth_model/reset_new_password_model.dart';
 import 'package:picks_empire/presentation/screens/auth/forgot_password/view_model/forgot_password_view_model.dart';
 
 import '../../../../../core/constrants/app_colors.dart';
@@ -109,8 +110,10 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
                         if (passwordController.text ==
                             confirmPasswordController.text) {
                           read.resetPassword(
-                            widget.email,
-                            passwordController.text.trim(),
+                            ResetPasswordModel(
+                              email: widget.email,
+                              password: passwordController.text.trim(),
+                            ),
                             () {
                               Navigator.pushNamed(
                                 context,

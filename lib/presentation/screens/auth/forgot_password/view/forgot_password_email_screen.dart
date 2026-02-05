@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:picks_empire/data/model/auth_model/forgot_password_model.dart';
 import 'package:picks_empire/presentation/screens/auth/forgot_password/view_model/forgot_password_view_model.dart';
 
 import '../../../../../core/constrants/app_colors.dart';
@@ -75,13 +76,18 @@ class _ForgotPasswordEmailScreenState
                     child: ElevatedButton(
                       style: getElevatedButtonStyle(color: AppColors.BtnColor),
                       onPressed: () {
-                        read.forgotPassword(emailController.text.trim(), () {
-                          Navigator.pushNamed(
-                            context,
-                            RouteName.forgotPassword_OTPScreen,
-                            arguments: emailController.text.trim(),
-                          );
-                        });
+                        read.forgotPassword(
+                          ForgotPasswordModel(
+                            email: emailController.text.trim(),
+                          ),
+                          () {
+                            Navigator.pushNamed(
+                              context,
+                              RouteName.forgotPassword_OTPScreen,
+                              arguments: emailController.text.trim(),
+                            );
+                          },
+                        );
                       },
                       child: Text(
                         "Continue",

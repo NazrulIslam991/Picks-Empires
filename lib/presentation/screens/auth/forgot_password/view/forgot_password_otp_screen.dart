@@ -6,6 +6,7 @@ import 'package:pinput/pinput.dart';
 import '../../../../../core/constrants/app_colors.dart';
 import '../../../../../core/resources/style_manager.dart';
 import '../../../../../core/routes/route_name.dart';
+import '../../../../../data/model/auth_model/forgot_password_otp_model.dart';
 import '../../../widgets/background_widget.dart';
 import '../../../widgets/custom_back_btn.dart';
 import '../view_model/forgot_password_view_model.dart';
@@ -83,8 +84,10 @@ class _ForgotPasswordOtpScreenState
                     style: getElevatedButtonStyle(color: AppColors.BtnColor),
                     onPressed: () {
                       read.VerifyOtp(
-                        widget.email,
-                        pinController.text.trim(),
+                        ForgotPasswordOTPModel(
+                          email: widget.email,
+                          otp: pinController.text.trim(),
+                        ),
                         () {
                           Navigator.pushNamed(
                             context,

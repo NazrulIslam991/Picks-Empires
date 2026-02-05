@@ -5,17 +5,24 @@ import 'package:picks_empire/data/repository/auth_repository_impl/auth_repositor
 import 'package:picks_empire/data/sources/remote/auth_remote_source.dart';
 import 'package:picks_empire/presentation/screens/auth/forgot_password/view_model/forgot_password_state_model.dart';
 
+import '../../../../../data/model/auth_model/forgot_password_model.dart';
+import '../../../../../data/model/auth_model/forgot_password_otp_model.dart';
+import '../../../../../data/model/auth_model/reset_new_password_model.dart';
+
 class ForgotPasswordViewModel extends StateNotifier<ForgotPasswordStateModel> {
   final AuthRepositoryImpl _authRepositoryImpl;
   ForgotPasswordViewModel(this._authRepositoryImpl)
     : super(ForgotPasswordStateModel());
 
   // forgot password email
-  Future<void> forgotPassword(String email, VoidCallback onSuccess) async {
+  Future<void> forgotPassword(
+    ForgotPasswordModel model,
+    VoidCallback onSuccess,
+  ) async {
     state = state.copyWith(isLoading: true);
 
     try {
-      final resposnse = await _authRepositoryImpl.forgotPassword(email);
+      final resposnse = await _authRepositoryImpl.forgotPassword(model);
       state = state.copyWith(isLoading: false);
       onSuccess();
     } catch (e) {
@@ -26,17 +33,16 @@ class ForgotPasswordViewModel extends StateNotifier<ForgotPasswordStateModel> {
 
   // forgot password otp section
   Future<void> VerifyOtp(
-    String email,
-    String otp,
+    ForgotPasswordOTPModel model,
     VoidCallback onSuccess,
   ) async {
     state = state.copyWith(isLoading: true);
     // Debug Print:
     debugPrint("======== OTP Verification Started ========");
-    debugPrint("Email: $email");
-    debugPrint("Entered OTP: $otp");
+    debugPrint("Email: ${model.email}");
+    debugPrint("Entered OTP: ${model.otp}");
     try {
-      await _authRepositoryImpl.forgotPasswordOTPVerificaiton(email, otp);
+      await _authRepositoryImpl.forgotPasswordOTPVerificaiton(model);
       debugPrint("Status: SUCCESS - OTP Verified");
       debugPrint("==========================================");
       state = state.copyWith(isLoading: false);
@@ -51,17 +57,16 @@ class ForgotPasswordViewModel extends StateNotifier<ForgotPasswordStateModel> {
 
   // forgot password otp section
   Future<void> resetPassword(
-    String email,
-    String password,
+    ResetPasswordModel model,
     VoidCallback onSuccess,
   ) async {
     state = state.copyWith(isLoading: true);
     // Debug Print:
     debugPrint("======== OTP Verification Started ========");
-    debugPrint("Email: $email");
-    debugPrint("Entered OTP: $password");
+    debugPrint("Email: ${model.email}");
+    debugPrint("Entered OTP: ${model.password}");
     try {
-      await _authRepositoryImpl.resetNewPassword(email, password);
+      await _authRepositoryImpl.resetNewPassword(model);
       debugPrint("Status: SUCCESS - OTP Verified");
       debugPrint("==========================================");
       state = state.copyWith(isLoading: false);

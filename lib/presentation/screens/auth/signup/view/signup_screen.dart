@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:picks_empire/core/constrants/app_colors.dart';
 import 'package:picks_empire/core/resources/style_manager.dart';
+import 'package:picks_empire/data/model/signup_model.dart';
 import 'package:picks_empire/presentation/screens/auth/login/view_model/toggle_password_view_model.dart';
 import 'package:picks_empire/presentation/screens/auth/signup/view_model/sign_up_view_model.dart';
 import 'package:picks_empire/presentation/screens/widgets/background_widget.dart';
@@ -163,19 +164,22 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
       ),
     );
   }
+  //
 
   // signup process
+
   void _handleSignup() {
     final signupNotifier = ref.read(signUpProvider.notifier);
 
     // 3. Execute the Signup logic
     signupNotifier.SignUp(
-      fullNameController.text.trim(),
-      emailController.text.trim(),
-      passwordController.text.trim(),
-      confirmPasswordController.text.trim(),
+      SignupModel(
+        name: fullNameController.text.trim(),
+        email: emailController.text.trim(),
+        password: passwordController.text.trim(),
+        confirmPass: confirmPasswordController.text.trim(),
+      ),
       () {
-        // 4. Handle Navigation on Success
         if (mounted) {
           Navigator.pushNamed(
             context,

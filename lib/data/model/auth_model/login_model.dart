@@ -1,10 +1,10 @@
-class LgoinModel {
+class LoginModel {
   String? email;
   String? password;
 
-  LgoinModel({this.email, this.password});
+  LoginModel({this.email, this.password});
 
-  LgoinModel.fromJson(Map<String, dynamic> json) {
+  LoginModel.fromJson(Map<String, dynamic> json) {
     email = json['email'];
     password = json['password'];
   }

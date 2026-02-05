@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:picks_empire/core/constrants/app_colors.dart';
 import 'package:picks_empire/core/routes/route_name.dart';
+import 'package:picks_empire/data/model/auth_model/otp_model.dart';
 import 'package:picks_empire/presentation/screens/widgets/background_widget.dart';
 import 'package:picks_empire/presentation/screens/widgets/custom_back_btn.dart';
 import 'package:pinput/pinput.dart';
@@ -82,8 +83,10 @@ class _OtpScreenState extends ConsumerState<OtpScreen> {
                     style: getElevatedButtonStyle(color: AppColors.BtnColor),
                     onPressed: () {
                       read.VerifyOtp(
-                        widget.email,
-                        pinController.text.trim(),
+                        OtpModel(
+                          email: widget.email,
+                          otp: pinController.text.trim(),
+                        ),
                         () {
                           Navigator.pushNamedAndRemoveUntil(
                             context,

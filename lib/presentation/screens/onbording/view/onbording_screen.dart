@@ -16,6 +16,7 @@ class OnbordingScreen extends ConsumerWidget {
     final onBordingIndexRead = ref.read(onBordingIndexProvider.notifier);
     final pageController = ref.watch(pageControllerProvider);
     return Scaffold(
+      backgroundColor: Colors.black,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -35,15 +36,11 @@ class OnbordingScreen extends ConsumerWidget {
               onBordingIndexRead.state = index;
             },
             itemBuilder: (context, index) {
-              return AnimatedOpacity(
-                duration: const Duration(milliseconds: 100),
-                opacity: onBordingIndex == index ? 1.0 : 0.0,
-                child: Image.asset(
-                  onBordingList[index].img,
-                  fit: BoxFit.cover,
-                  width: double.infinity,
-                  height: double.infinity,
-                ),
+              return Image.asset(
+                onBordingList[index].img,
+                fit: BoxFit.cover,
+                width: double.infinity,
+                height: double.infinity,
               );
             },
           ), // page indicator
@@ -107,7 +104,11 @@ class OnbordingScreen extends ConsumerWidget {
                           curve: Curves.easeInOut,
                         );
                       } else {
-                        Navigator.pushNamed(context, RouteName.logInScreen);
+                        Navigator.pushNamedAndRemoveUntil(
+                          context,
+                          RouteName.logInScreen,
+                          (predicate) => false,
+                        );
                       }
                     },
                     child: const Text(

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "128309134626",
+    "project_id": "picks-empire",
+    "storage_bucket": "picks-empire.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:128309134626:android:5deea368735786ffdb117b",
+        "android_client_info": {
+          "package_name": "com.example.picks_empire"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzfZWEZxRyEI6HlVS7Xi_GRp7OeiYf7IY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
