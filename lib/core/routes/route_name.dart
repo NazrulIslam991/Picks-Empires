@@ -29,4 +29,6 @@ class RouteName {
       "/legalAndPolicyScreen"; // legalAndPolicyScreen
   static const String helpAndSupportScreen =
       "/helpAndSupportScreen"; // helpAndSupportScreen
+  static const String detailsScreen = "/detailsScreen";
+  static const String productUpdateScreen = "/productUpdateScreen";
 }

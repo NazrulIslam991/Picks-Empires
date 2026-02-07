@@ -1,5 +1,9 @@
 class ApiEndpoints {
-  static const String baseUrl = "http://192.168.7.102:4010/api";
+  //static const String baseUrl = "http://192.168.7.102:4010/api";
+  //static const String baseUrl = "https://fakestoreapi.com";
+  static const String baseUrl = "https://dummyjson.com";
+  static const String products = "products";
+  static const String products_2 = "products";
   static const String register = 'auth/register';
   static const String verifyOtp = 'auth/verify-email';
   static const String login = 'auth/login';

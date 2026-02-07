@@ -148,7 +148,8 @@ class ApiClient {
       final response = await _dio.delete(
         '/$endpoints',
         options: Options(
-          headers: headers ?? {"Content-Type": "multipart/form-data"},
+          //headers: headers ?? {"Content-Type": "multipart/form-data"},
+          headers: headers ?? {"Content-Type": "application/json"},
         ),
       );
 

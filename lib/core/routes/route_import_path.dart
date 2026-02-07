@@ -2,12 +2,15 @@ library app_route;
 
 import 'package:flutter/material.dart';
 import 'package:picks_empire/core/routes/route_name.dart';
+import 'package:picks_empire/data/model/product/product_model_2.dart';
 import 'package:picks_empire/presentation/screens/auth/category/view/category_screen.dart';
 import 'package:picks_empire/presentation/screens/auth/forgot_password/view/forgot_password_email_screen.dart';
 import 'package:picks_empire/presentation/screens/auth/forgot_password/view/forgot_password_otp_screen.dart';
 import 'package:picks_empire/presentation/screens/auth/forgot_password/view/reset_password_screen.dart';
 import 'package:picks_empire/presentation/screens/auth/login/view/login_screen.dart';
 import 'package:picks_empire/presentation/screens/auth/signup/view/signup_screen.dart';
+import 'package:picks_empire/presentation/screens/crypto/view/details_screen.dart';
+import 'package:picks_empire/presentation/screens/crypto/view/product_update_screen.dart';
 import 'package:picks_empire/presentation/screens/navbar/view/navbar_screen.dart';
 import 'package:picks_empire/presentation/screens/notification/view/notification_screen.dart';
 import 'package:picks_empire/presentation/screens/profile/view/help_and_support_screen.dart';

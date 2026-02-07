@@ -1,7 +1,7 @@
 import 'package:picks_empire/data/model/auth_model/forgot_password_model.dart';
 import 'package:picks_empire/data/model/auth_model/login_model.dart';
 import 'package:picks_empire/data/model/auth_model/otp_model.dart';
-import 'package:picks_empire/data/model/signup_model.dart';
+import 'package:picks_empire/data/model/auth_model/signup_model.dart';
 import 'package:picks_empire/data/sources/remote/auth_remote_source.dart';
 import 'package:picks_empire/domain/repository/auth_repository/auth_repository.dart';
 

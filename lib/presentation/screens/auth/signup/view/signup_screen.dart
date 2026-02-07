@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:picks_empire/core/constrants/app_colors.dart';
 import 'package:picks_empire/core/resources/style_manager.dart';
-import 'package:picks_empire/data/model/signup_model.dart';
+import 'package:picks_empire/data/model/auth_model/signup_model.dart';
 import 'package:picks_empire/presentation/screens/auth/login/view_model/toggle_password_view_model.dart';
 import 'package:picks_empire/presentation/screens/auth/signup/view_model/sign_up_view_model.dart';
 import 'package:picks_empire/presentation/screens/widgets/background_widget.dart';

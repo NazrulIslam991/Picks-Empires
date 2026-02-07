@@ -6,7 +6,6 @@ import 'package:picks_empire/core/constrants/app_colors.dart';
 import 'package:picks_empire/core/constrants/app_images.dart';
 import 'package:picks_empire/core/resources/style_manager.dart';
 import 'package:picks_empire/core/routes/route_name.dart';
-import 'package:picks_empire/data/model/auth_model/login_model.dart';
 import 'package:picks_empire/presentation/screens/auth/login/services.dart';
 import 'package:picks_empire/presentation/screens/auth/login/view_model/login_view_model.dart';
 import 'package:picks_empire/presentation/screens/widgets/custom_text_input_field.dart';
@@ -153,26 +152,33 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       width: double.infinity,
                       height: 50,
                       child: ElevatedButton(
-                        onPressed: loginState.isLoading
-                            ? null
-                            : () {
-                                // 4. Validate Form before calling ViewModel
-                                if (_formKey.currentState!.validate()) {
-                                  ref.read(loginProvider.notifier).login(
-                                    LoginModel(
-                                      email: emailController.text.trim(),
-                                      password: passwordController.text.trim(),
-                                    ),
-                                    () {
-                                      Navigator.pushNamedAndRemoveUntil(
-                                        context,
-                                        RouteName.navBarScreen,
-                                        (predicate) => false,
-                                      );
-                                    },
-                                  );
-                                }
-                              },
+                        // onPressed: loginState.isLoading
+                        //     ? null
+                        //     : () {
+                        //         // 4. Validate Form before calling ViewModel
+                        //         if (_formKey.currentState!.validate()) {
+                        //           ref.read(loginProvider.notifier).login(
+                        //             LoginModel(
+                        //               email: emailController.text.trim(),
+                        //               password: passwordController.text.trim(),
+                        //             ),
+                        //             () {
+                        //               Navigator.pushNamedAndRemoveUntil(
+                        //                 context,
+                        //                 RouteName.navBarScreen,
+                        //                 (predicate) => false,
+                        //               );
+                        //             },
+                        //           );
+                        //         }
+                        //       },
+                        onPressed: () {
+                          Navigator.pushNamedAndRemoveUntil(
+                            context,
+                            RouteName.navBarScreen,
+                            (route) => false,
+                          );
+                        },
                         style: getElevatedButtonStyle(
                           color: AppColors.BtnColor,
                         ),

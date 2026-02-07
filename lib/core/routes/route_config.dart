@@ -80,6 +80,16 @@ class AppRoute {
         return MaterialPageRoute(
           builder: (_) => const LegalAndPolicyScreen(),
         ); // legalAndPolicyScreen screen
+      case RouteName.detailsScreen:
+        final productModel_2 = settings.arguments as ProductModel_2;
+        return MaterialPageRoute(
+          builder: (_) => DetailsScreen(model_2: productModel_2),
+        ); // legalAndPolicyScreen screen
+      case RouteName.productUpdateScreen:
+        final productModel_2 = settings.arguments as ProductModel_2;
+        return MaterialPageRoute(
+          builder: (_) => ProductUpdateScreen(model_2: productModel_2),
+        );
       default:
         return MaterialPageRoute(
           builder: (_) =>

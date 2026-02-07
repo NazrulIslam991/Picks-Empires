@@ -3,7 +3,7 @@ import 'package:picks_empire/core/network/api_endpoints.dart';
 import 'package:picks_empire/data/model/auth_model/forgot_password_model.dart';
 import 'package:picks_empire/data/model/auth_model/login_model.dart';
 import 'package:picks_empire/data/model/auth_model/otp_model.dart';
-import 'package:picks_empire/data/model/signup_model.dart';
+import 'package:picks_empire/data/model/auth_model/signup_model.dart';
 
 import '../../model/auth_model/forgot_password_otp_model.dart';
 import '../../model/auth_model/reset_new_password_model.dart';

@@ -6,6 +6,12 @@
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
 	<string>Picks Empire</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+    <string>This app needs access to the photo library to update product images.</string>
+    <key>NSCameraUsageDescription</key>
+    <string>This app needs access to the camera to take product photos.</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>This app needs access to the microphone if you want to record videos.</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>

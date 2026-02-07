@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:picks_empire/core/constrants/validator.dart';
 import 'package:picks_empire/core/network/api_clients.dart';
-import 'package:picks_empire/data/model/signup_model.dart';
+import 'package:picks_empire/data/model/auth_model/signup_model.dart';
 import 'package:picks_empire/data/repository/auth_repository_impl/auth_repository_impl.dart';
 import 'package:picks_empire/data/sources/remote/auth_remote_source.dart';
 import 'package:picks_empire/presentation/screens/auth/signup/view_model/signup_state.dart';

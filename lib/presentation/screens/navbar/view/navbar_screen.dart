@@ -5,6 +5,9 @@ import 'package:picks_empire/presentation/screens/home/view/home_screen.dart';
 import 'package:picks_empire/presentation/screens/navbar/view_model/navbar_view_model.dart';
 import 'package:picks_empire/presentation/screens/sports/view/sports_screen.dart';
 
+import '../../crypto/view/crypto_screen.dart';
+import '../../strocks/view/strocks_screen.dart';
+
 class NavbarScreen extends ConsumerWidget {
   const NavbarScreen({super.key});
 
@@ -15,8 +18,8 @@ class NavbarScreen extends ConsumerWidget {
     final List<Widget> screen = [
       HomeScreen(),
       SportsScreen(),
-      SportsScreen(),
-      SportsScreen(),
+      StrocksScreen(),
+      CryptoScreen(),
       SportsScreen(),
       // StrocksScreen(),
       // CryptoScreen(),
